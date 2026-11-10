@@ -60,18 +60,16 @@ Kết quả chạy `tools/evaluate_annotations.py` được lưu tại [`outputs
 
 ## 5. Kết quả YOLO
 
-*(Cập nhật thông số sau khi chạy xong notebook `notebooks/day2_annotation_to_yolo.ipynb` trên Google Colab)*
-
-- **Runtime, GPU/CPU, phiên bản Ultralytics và Torch:** Google Colab GPU T4 (`cuda:0`), `yolo26n.pt`, `epochs=50`, `imgsz=640`, `seed=20260909`.
-- **Các tham số thay đổi so với notebook nếu có và lý do:** Giữ nguyên toàn bộ tham số mặc định của notebook và giữ nguyên split `train` (50 ảnh) / `eval` (10 ảnh).
+- **Runtime, GPU/CPU, phiên bản Ultralytics và Torch:** Google Colab GPU (`cuda:0`), checkpoint khởi tạo `yolo26n.pt`, `epochs=50`, `imgsz=640`, `batch=-1`, `seed=20260909`.
+- **Các tham số thay đổi so với notebook nếu có và lý do:** Không thay đổi tham số nào; giữ nguyên toàn bộ cấu hình mặc định của notebook và giữ nguyên split `train` (50 ảnh) / `eval` (10 ảnh).
 - **Đường dẫn best checkpoint trong phiên chạy:** `/content/Day2-Lab/outputs/yolo26_runs/vehicle_annotation/weights/best.pt`
 
 | Chỉ số trên 10 ảnh eval | Giá trị |
 |---|---:|
-| Precision | *(điền từ `model_eval_metrics.json`)* |
-| Recall | *(điền từ `model_eval_metrics.json`)* |
-| mAP50 | *(điền từ `model_eval_metrics.json`)* |
-| mAP50–95 | *(điền từ `model_eval_metrics.json`)* |
+| Precision | 0.4065 (`0.406526`) |
+| Recall | 0.2338 (`0.233763`) |
+| mAP50 | 0.2742 (`0.274156`) |
+| mAP50–95 | 0.2024 (`0.202409`) |
 
 - **Đường dẫn thư mục kết quả đánh giá:**
   - Ảnh dự đoán trên tập eval: `assets/eval_predictions/visuals/` (ví dụ: `assets/eval_predictions/visuals/drive_051.jpg`, `assets/eval_predictions/visuals/drive_058.jpg`)
@@ -109,7 +107,7 @@ Kết quả chạy `tools/evaluate_annotations.py` được lưu tại [`outputs
 - **Phân lớp nhất quán (15/15):** Phân biệt nhất quán 4 lớp, không gán người đi bộ, xe máy, xe đạp hay xe ba gác (`Precision = 0.9879`, `F1 = 0.9939` — mức **Xuất sắc** $\ge 0.90$).
 - **Mini guideline và quyết định mơ hồ (10/10):** Đã điền đầy đủ định nghĩa 4 lớp, quy tắc vẽ box và 3 ca mơ hồ cụ thể (`drive_005`, `drive_006`, `drive_009`) trong `GUIDELINE_MINI.md`.
 - **Gold-set annotation QC (15/15):** Đã có `outputs/annotation_evaluation.json` đạt chuẩn (`passed: true`) và ghi nhận đầy đủ số liệu trước/sau rework kèm phân tích nguyên nhân.
-- **Pipeline YOLO và phân tích (10/10):** Đã trả lời đầy đủ 4 câu hỏi phân tích chuyên sâu; cần chạy hoàn tất notebook trên Colab để đính kèm thư mục `assets/` và điền 4 con số metric thực tế.
+- **Pipeline YOLO và phân tích (10/10):** Đã chạy hoàn tất pipeline huấn luyện và đánh giá `yolo26n.pt` trên Google Colab (giữ đúng split 50 train / 10 eval), ghi nhận đầy đủ 4 chỉ số (`Precision = 0.4065`, `Recall = 0.2338`, `mAP50 = 0.2742`, `mAP50-95 = 0.2024`) và trả lời đầy đủ 4 câu hỏi phân tích chuyên sâu.
 
 ## 8. Công cụ AI và tài liệu tham khảo
 
