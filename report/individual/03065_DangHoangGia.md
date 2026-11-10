@@ -13,29 +13,29 @@
 
 Chi tiết định nghĩa 4 lớp và quy tắc gán nhãn xem tại [GUIDELINE_MINI.md](../../GUIDELINE_MINI.md).
 
-- **Cách áp dụng schema 4 lớp (`0: car`, `1: truck`, `2: bus`, `3: van`):**
-  - Phân loại dựa trên **loại phương tiện**, không phụ thuộc vào trạng thái di chuyển hay đang đỗ.
+- Cách áp dụng schema 4 lớp (`0: car`, `1: truck`, `2: bus`, `3: van`):
+  - Phân loại dựa trên loại phương tiện, không phụ thuộc vào trạng thái di chuyển hay đang đỗ.
   - Mỗi phương tiện hợp lệ được vẽ một bounding box 2D độc lập, ôm sát phần thân xe thực tế nhìn thấy được trong khung hình.
   - Không gán người đi bộ, xe đạp, xe máy/mô tô, xe ba gác, biển báo giao thông.
-- **Tóm tắt 3 ca mơ hồ đã quyết định trong `GUIDELINE_MINI.md`:**
-  1. **`drive_005` (`x=402..449, y=132..203`):** Xe chuyên dụng màu trắng dừng sát dải phân cách giữa có cabin đầu xe tách rời khung/thùng thiết bị phía sau $\rightarrow$ quyết định gán `truck` (`1`), sau khi đối chiếu quy ước bộ dữ liệu nguồn UA-DETRAC tại bước rework đã đồng bộ lại lớp theo quy chuẩn bộ nhãn chuẩn.
-  2. **`drive_006` (`x=506..608, y=332..472`):** Xe màu bạc dáng hộp vuông có giá nóc ở làn phải, hình dáng trung gian giữa hatchback/MPV và microvan $\rightarrow$ xem xét kỹ biên dạng thân hộp liền khối để phân loại nhất quán.
-  3. **`drive_009` (`x=125..242, y=166..318` và `x=216..278, y=185..234`):** Xe tải thùng kín màu xanh lá cây đi song song xe van trắng và bị che khuất một phần bởi xe buýt tiền cảnh $\rightarrow$ tách riêng 2 bounding box bám sát phần thân nhìn thấy được của từng xe, không gộp chung.
-- **Phần cần giảng viên làm rõ (Escalation):**
+- Tóm tắt 3 ca mơ hồ đã quyết định trong `GUIDELINE_MINI.md`:
+  1. `drive_005` (`x=402..449, y=132..203`): Xe chuyên dụng màu trắng dừng sát dải phân cách giữa có cabin đầu xe tách rời khung/thùng thiết bị phía sau $\rightarrow$ quyết định gán `truck` (`1`), sau khi đối chiếu quy ước bộ dữ liệu nguồn UA-DETRAC tại bước rework đã đồng bộ lại lớp theo quy chuẩn bộ nhãn chuẩn.
+  2. `drive_006` (`x=506..608, y=332..472`):** Xe màu bạc dáng hộp vuông có giá nóc ở làn phải, hình dáng trung gian giữa hatchback/MPV và microvan $\rightarrow$ xem xét kỹ biên dạng thân hộp liền khối để phân loại nhất quán.
+  3. `drive_009` (`x=125..242, y=166..318` và `x=216..278, y=185..234`):** Xe tải thùng kín màu xanh lá cây đi song song xe van trắng và bị che khuất một phần bởi xe buýt tiền cảnh $\rightarrow$ tách riêng 2 bounding box bám sát phần thân nhìn thấy được của từng xe, không gộp chung.
+- Phần cần giảng viên làm rõ (Escalation):**
   - Quy ước vùng bỏ qua (ignore regions) đối với dải xe đỗ trên vỉa hè/làn phụ tách biệt (`drive_001`, `drive_007`) và quy ước ánh xạ mã lớp giữa định nghĩa trực quan trong `data.yaml` với bộ nhãn gốc UA-DETRAC.
 
 ## 3. Annotation và self-QC
 
-- **Số file nhãn train:** `50/50` file `.txt` trong `dataset/labels/train/` (`drive_001.txt` $\rightarrow$ `drive_050.txt`).
-- **Kết quả checker và lỗi đã xử lý:**
+- Số file nhãn train:** `50/50` file `.txt` trong `dataset/labels/train/` (`drive_001.txt` $\rightarrow$ `drive_050.txt`).
+- Kết quả checker và lỗi đã xử lý:**
   - Chạy lệnh `python tools/check_yolo_labels.py` đạt `50/50 file nhãn hợp lệ` ngay từ lần kiểm tra cấu trúc; tất cả dòng nhãn có đúng 5 cột `<class_id> <x_center> <y_center> <width> <height>`, tọa độ chuẩn hóa trong `[0, 1]`, không có box vượt biên ảnh.
-- **Danh sách 10 ảnh đã rà bằng mắt (Self-QC):**
+- Danh sách 10 ảnh đã rà bằng mắt (Self-QC):**
   - `drive_001`, `drive_005`, `drive_008`, `drive_014`, `drive_024`, `drive_031`, `drive_039`, `drive_042`, `drive_048`, `drive_050`.
-- **Lỗi bỏ sót/box/class phát hiện khi rà và cách sửa:**
+- Lỗi bỏ sót/box/class phát hiện khi rà và cách sửa:**
   - Trên `drive_024`: Kiểm tra kỹ xe ba gác có mái che ở tiền cảnh để đảm bảo không gán nhầm vào `van` hay `car`.
   - Trên `drive_008` và `drive_039`: Tinh chỉnh lại cạnh bounding box của các xe con bị xe buýt che khuất một phần để box chỉ ôm phần thân xe nhìn thấy được, không lấn sang thân xe buýt.
   - Trên `drive_042`: Tách rõ box của xe tải chở hàng cồng kềnh (`truck`) với xe buýt 2 tầng phía sau và xe buýt tiền cảnh.
-- **Commit khóa nhãn ban đầu:** `70c0dd7` (commit sau rework: `771e021`)
+- *ommit khóa nhãn ban đầu:** `70c0dd7` (commit sau rework: `771e021`)
 
 ## 4. Gold QC và rework
 
@@ -77,16 +77,16 @@ Kết quả chạy `tools/evaluate_annotations.py` được lưu tại [`outputs
 
 ### Trả lời bốn câu hỏi phân tích cuối notebook:
 
-1. **Lớp nào recall thấp nhất? Ảnh nào minh họa?**
+1. Lớp nào recall thấp nhất? Ảnh nào minh họa?
    - Các lớp thiểu số (`truck`, `bus`, `van` — đặc biệt là lớp có số lượng mẫu ít nhất trong tập train/eval như `truck`/`bus`) có recall thấp hơn hẳn so với lớp `car`.
-   - **Ảnh minh họa:** Trên `drive_051.jpg` (xe tải/buýt ở góc trên bên phải bị cột đèn che một phần tại `x=0.828, y=0.130`) hoặc `drive_058.jpg` (hàng xe đông đúc nhiều lớp chồng lấp ở làn trái và xe bồn bên phải `x=0.938, y=0.397`), model dễ nhận diện đúng hàng loạt xe `car` nhưng bỏ sót hoặc dự đoán sai lớp đối với các lớp ít mẫu.
-2. **Nếu mAP50 cao nhưng mAP50–95 thấp, cần kiểm điều gì trên box?**
+   - Ảnh minh họa: Trên `drive_051.jpg` (xe tải/buýt ở góc trên bên phải bị cột đèn che một phần tại `x=0.828, y=0.130`) hoặc `drive_058.jpg` (hàng xe đông đúc nhiều lớp chồng lấp ở làn trái và xe bồn bên phải `x=0.938, y=0.397`), model dễ nhận diện đúng hàng loạt xe `car` nhưng bỏ sót hoặc dự đoán sai lớp đối với các lớp ít mẫu.
+2. Nếu mAP50 cao nhưng mAP50–95 thấp, cần kiểm điều gì trên box?
    - `mAP50` chỉ yêu cầu IoU $\ge 0.50$ là tính dự đoán đúng vị trí, trong khi `mAP50–95` lấy trung bình ở các ngưỡng khắt khe hơn từ `0.50` đến `0.95` (bước nhảy `0.05`).
    - Khi `mAP50` cao nhưng `mAP50–95` thấp, nghĩa là model phát hiện được đúng vị trí chung của xe nhưng **biên bounding box chưa sát**: cần kiểm tra xem nhãn huấn luyện có bị vẽ lỏng (dư nền đường/bóng đổ), cắt thiếu phần thân xe, hoặc không nhất quán ở các xe bị che khuất/cắt rìa ảnh hay không.
-3. **Lỗi class nào có thể liên quan guideline? Dữ kiện nào hỗ trợ nhận xét?**
+3. Lỗi class nào có thể liên quan guideline? Dữ kiện nào hỗ trợ nhận xét?
    - Lỗi nhầm lẫn giữa `car` $\leftrightarrow$ `van` (SUV/MPV 7 chỗ hình hộp với minivan) và giữa `van` $\leftrightarrow$ `bus` $\leftrightarrow$ `truck` (minibus/van cỡ lớn hoặc xe tải thùng kín với xe buýt).
-   - **Dữ kiện hỗ trợ:** Ngoài sự mất cân bằng dữ liệu nghiêm trọng (`car` chiếm hơn 80% tổng số box, trong khi `truck`/`bus`/`van` chiếm tỷ lệ rất nhỏ), hình dáng thị giác từ góc camera CCTV trên cao khiến các dòng xe MPV, minivan và xe tải nhỏ ở xa có tỷ lệ khung hình rất giống nhau nếu guideline không quy định rõ ngưỡng phân biệt theo kích thước/cấu trúc thân xe.
-4. **Vì sao không dùng 10 ảnh eval để train? Vai trò validation của chúng trong notebook là gì?**
+   - Dữ kiện hỗ trợ:** Ngoài sự mất cân bằng dữ liệu nghiêm trọng (`car` chiếm hơn 80% tổng số box, trong khi `truck`/`bus`/`van` chiếm tỷ lệ rất nhỏ), hình dáng thị giác từ góc camera CCTV trên cao khiến các dòng xe MPV, minivan và xe tải nhỏ ở xa có tỷ lệ khung hình rất giống nhau nếu guideline không quy định rõ ngưỡng phân biệt theo kích thước/cấu trúc thân xe.
+4. Vì sao không dùng 10 ảnh eval để train? Vai trò validation của chúng trong notebook là gì?
    - Nếu đưa 10 ảnh `eval` vào tập `train`, mô hình sẽ học thuộc trực tiếp các ảnh đánh giá (data leakage / rò rỉ dữ liệu), làm các chỉ số `mAP50`, `Precision`, `Recall` tăng ảo và mất hoàn toàn khả năng đánh giá độ tổng quát hóa của mô hình trên dữ liệu chưa từng học.
    - Trong notebook này, 10 ảnh `eval` đóng vai trò là tập **validation (`val`)** được đánh giá sau mỗi epoch để theo dõi quá trình hội tụ và chọn ra checkpoint tốt nhất (`best.pt`), đồng thời dùng để xuất ảnh dự đoán kiểm tra trực quan. Do đó, nó cũng không phải là một tập test độc lập hoàn toàn.
 
@@ -101,19 +101,19 @@ Kết quả chạy `tools/evaluate_annotations.py` được lưu tại [`outputs
 
 Đối chiếu với [RUBRIC.md](../../RUBRIC.md):
 
-- **Hoàn thành và định dạng YOLO (10/10):** Đủ 50 file `.txt` cùng basename trong `dataset/labels/train/`, đúng 5 cột chuẩn hóa, vượt qua `tools/check_yolo_labels.py`.
-- **Đầy đủ vật thể (20/20):** Đã gán đầy đủ các phương tiện hợp lệ trong vùng đánh giá, đạt `Recall = 1.0000` trên gold set.
-- **Độ bám sát và hình học box (20/20):** Box bám rất sát thân xe, đạt `mean_iou_of_matches = 0.8578` (mức **Xuất sắc** $\ge 0.80$).
-- **Phân lớp nhất quán (15/15):** Phân biệt nhất quán 4 lớp, không gán người đi bộ, xe máy, xe đạp hay xe ba gác (`Precision = 0.9879`, `F1 = 0.9939` — mức **Xuất sắc** $\ge 0.90$).
-- **Mini guideline và quyết định mơ hồ (10/10):** Đã điền đầy đủ định nghĩa 4 lớp, quy tắc vẽ box và 3 ca mơ hồ cụ thể (`drive_005`, `drive_006`, `drive_009`) trong `GUIDELINE_MINI.md`.
-- **Gold-set annotation QC (15/15):** Đã có `outputs/annotation_evaluation.json` đạt chuẩn (`passed: true`) và ghi nhận đầy đủ số liệu trước/sau rework kèm phân tích nguyên nhân.
-- **Pipeline YOLO và phân tích (10/10):** Đã chạy hoàn tất pipeline huấn luyện và đánh giá `yolo26n.pt` trên Google Colab (giữ đúng split 50 train / 10 eval), ghi nhận đầy đủ 4 chỉ số (`Precision = 0.5552`, `Recall = 0.5086`, `mAP50 = 0.5517`, `mAP50-95 = 0.3779`) và trả lời đầy đủ 4 câu hỏi phân tích chuyên sâu.
+- Hoàn thành và định dạng YOLO (10/10): Đủ 50 file `.txt` cùng basename trong `dataset/labels/train/`, đúng 5 cột chuẩn hóa, vượt qua `tools/check_yolo_labels.py`.
+- Đầy đủ vật thể (20/20):** Đã gán đầy đủ các phương tiện hợp lệ trong vùng đánh giá, đạt `Recall = 1.0000` trên gold set.
+- Độ bám sát và hình học box (20/20):** Box bám rất sát thân xe, đạt `mean_iou_of_matches = 0.8578` (mức **Xuất sắc** $\ge 0.80$).
+- Phân lớp nhất quán (15/15):** Phân biệt nhất quán 4 lớp, không gán người đi bộ, xe máy, xe đạp hay xe ba gác (`Precision = 0.9879`, `F1 = 0.9939` — mức **Xuất sắc** $\ge 0.90$).
+- Mini guideline và quyết định mơ hồ (10/10):** Đã điền đầy đủ định nghĩa 4 lớp, quy tắc vẽ box và 3 ca mơ hồ cụ thể (`drive_005`, `drive_006`, `drive_009`) trong `GUIDELINE_MINI.md`.
+- Gold-set annotation QC (15/15):** Đã có `outputs/annotation_evaluation.json` đạt chuẩn (`passed: true`) và ghi nhận đầy đủ số liệu trước/sau rework kèm phân tích nguyên nhân.
+- Pipeline YOLO và phân tích (10/10):** Đã chạy hoàn tất pipeline huấn luyện và đánh giá `yolo26n.pt` trên Google Colab (giữ đúng split 50 train / 10 eval), ghi nhận đầy đủ 4 chỉ số (`Precision = 0.5552`, `Recall = 0.5086`, `mAP50 = 0.5517`, `mAP50-95 = 0.3779`) và trả lời đầy đủ 4 câu hỏi phân tích chuyên sâu.
 
 ## 8. Công cụ AI và tài liệu tham khảo
 
-- **Công cụ đã sử dụng:**
+- Công cụ đã sử dụng:**
   - Python 3 (`tools/check_yolo_labels.py`, `tools/evaluate_annotations.py`) để kiểm tra định dạng nhãn YOLO và đánh giá chất lượng nhãn với bộ gold labels.
   - Trợ lý AI hỗ trợ kiểm tra lỗi cú pháp, xuất ảnh trực quan hóa bounding box để tự rà soát (Self-QC) và gợi ý trình bày cấu trúc báo cáo. Toàn bộ nhãn và quyết định rework trên 50 ảnh đã được kiểm tra trực quan bằng mắt.
-- **Tài liệu tham khảo:**
+- Tài liệu tham khảo:**
   - Tài liệu hướng dẫn bài thực hành trong repository (`README.md`, `GUIDE.md`, `RULES.md`, `CHECKPOINTS.md`, `RUBRIC.md`, `SUBMISSION.md`).
   - Tài liệu Ultralytics YOLO documentation (`https://docs.ultralytics.com`).
