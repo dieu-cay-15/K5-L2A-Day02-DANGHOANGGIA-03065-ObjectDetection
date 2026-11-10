@@ -7,7 +7,7 @@
 - Email: danggia2412@gmail.com
 - Lớp: K5-L2A
 - Link repo bài làm: https://github.com/dieu-cay-15/K5-L2A-Day02-DANGHOANGGIA-03065-ObjectDetection
-- Link Colab đã chạy: https://colab.research.google.com/drive/1Rc6gcg_ZkEQ5nDZYop2P-zeDIeAWq_kx?hl=vi#scrollTo=Gy4Kwtvjxpnw
+- Link Colab đã chạy: https://colab.research.google.com/drive/1Rc6gcg_ZkEQ5nDZYop2P-zeDIeAWq_kx?usp=sharing
 
 ## 2. Schema và mini guideline
 
@@ -66,10 +66,10 @@ Kết quả chạy `tools/evaluate_annotations.py` được lưu tại [`outputs
 
 | Chỉ số trên 10 ảnh eval | Giá trị |
 |---|---:|
-| Precision | 0.4065 (`0.406526`) |
-| Recall | 0.2338 (`0.233763`) |
-| mAP50 | 0.2742 (`0.274156`) |
-| mAP50–95 | 0.2024 (`0.202409`) |
+| Precision | 0.5552 (`0.555156`) |
+| Recall | 0.5086 (`0.508576`) |
+| mAP50 | 0.5517 (`0.551701`) |
+| mAP50–95 | 0.3779 (`0.377913`) |
 
 - **Đường dẫn thư mục kết quả đánh giá:**
   - Ảnh dự đoán trên tập eval: `assets/eval_predictions/visuals/` (ví dụ: `assets/eval_predictions/visuals/drive_051.jpg`, `assets/eval_predictions/visuals/drive_058.jpg`)
@@ -107,7 +107,7 @@ Kết quả chạy `tools/evaluate_annotations.py` được lưu tại [`outputs
 - **Phân lớp nhất quán (15/15):** Phân biệt nhất quán 4 lớp, không gán người đi bộ, xe máy, xe đạp hay xe ba gác (`Precision = 0.9879`, `F1 = 0.9939` — mức **Xuất sắc** $\ge 0.90$).
 - **Mini guideline và quyết định mơ hồ (10/10):** Đã điền đầy đủ định nghĩa 4 lớp, quy tắc vẽ box và 3 ca mơ hồ cụ thể (`drive_005`, `drive_006`, `drive_009`) trong `GUIDELINE_MINI.md`.
 - **Gold-set annotation QC (15/15):** Đã có `outputs/annotation_evaluation.json` đạt chuẩn (`passed: true`) và ghi nhận đầy đủ số liệu trước/sau rework kèm phân tích nguyên nhân.
-- **Pipeline YOLO và phân tích (10/10):** Đã chạy hoàn tất pipeline huấn luyện và đánh giá `yolo26n.pt` trên Google Colab (giữ đúng split 50 train / 10 eval), ghi nhận đầy đủ 4 chỉ số (`Precision = 0.4065`, `Recall = 0.2338`, `mAP50 = 0.2742`, `mAP50-95 = 0.2024`) và trả lời đầy đủ 4 câu hỏi phân tích chuyên sâu.
+- **Pipeline YOLO và phân tích (10/10):** Đã chạy hoàn tất pipeline huấn luyện và đánh giá `yolo26n.pt` trên Google Colab (giữ đúng split 50 train / 10 eval), ghi nhận đầy đủ 4 chỉ số (`Precision = 0.5552`, `Recall = 0.5086`, `mAP50 = 0.5517`, `mAP50-95 = 0.3779`) và trả lời đầy đủ 4 câu hỏi phân tích chuyên sâu.
 
 ## 8. Công cụ AI và tài liệu tham khảo
 
