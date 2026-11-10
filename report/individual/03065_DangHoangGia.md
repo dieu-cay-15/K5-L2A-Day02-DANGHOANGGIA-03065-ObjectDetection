@@ -35,6 +35,7 @@ Chi tiết định nghĩa 4 lớp và quy tắc gán nhãn xem tại [GUIDELINE_
   - Trên `drive_024`: Kiểm tra kỹ xe ba gác có mái che ở tiền cảnh để đảm bảo không gán nhầm vào `van` hay `car`.
   - Trên `drive_008` và `drive_039`: Tinh chỉnh lại cạnh bounding box của các xe con bị xe buýt che khuất một phần để box chỉ ôm phần thân xe nhìn thấy được, không lấn sang thân xe buýt.
   - Trên `drive_042`: Tách rõ box của xe tải chở hàng cồng kềnh (`truck`) với xe buýt 2 tầng phía sau và xe buýt tiền cảnh.
+- **Commit khóa nhãn ban đầu:** `70c0dd7` (commit sau rework: `771e021`)
 
 ## 4. Gold QC và rework
 
