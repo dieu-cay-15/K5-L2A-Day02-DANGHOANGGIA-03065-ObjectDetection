@@ -1,0 +1,9 @@
+# Notebook tự đổi `path` thành đường dẫn tuyệt đối khi chạy trên Colab. Tên lớp và thứ tự phải giữ nguyên.
+path: dataset
+train: images/train
+val: images/eval
+names:
+  0: car
+  1: truck
+  2: bus
+  3: van
