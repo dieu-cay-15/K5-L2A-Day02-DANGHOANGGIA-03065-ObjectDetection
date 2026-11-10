@@ -3,7 +3,7 @@
 ## 1. Thông tin học viên
 
 - Họ tên: Đặng Hoàng Gia
-- MSSV: 03065
+- MSSV: 2A202603065
 - Email: danggia2412@gmail.com
 - Lớp: K5-L2A
 - Link repo bài làm: https://github.com/dieu-cay-15/K5-L2A-Day02-DANGHOANGGIA-03065-ObjectDetection
