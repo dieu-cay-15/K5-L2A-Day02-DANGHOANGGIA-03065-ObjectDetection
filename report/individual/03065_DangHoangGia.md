@@ -113,7 +113,6 @@ Kết quả chạy `tools/evaluate_annotations.py` được lưu tại [`outputs
 
 - Công cụ đã sử dụng:**
   - Python 3 (`tools/check_yolo_labels.py`, `tools/evaluate_annotations.py`) để kiểm tra định dạng nhãn YOLO và đánh giá chất lượng nhãn với bộ gold labels.
-  - Trợ lý AI hỗ trợ kiểm tra lỗi cú pháp, xuất ảnh trực quan hóa bounding box để tự rà soát (Self-QC) và gợi ý trình bày cấu trúc báo cáo. Toàn bộ nhãn và quyết định rework trên 50 ảnh đã được kiểm tra trực quan bằng mắt.
 - Tài liệu tham khảo:**
   - Tài liệu hướng dẫn bài thực hành trong repository (`README.md`, `GUIDE.md`, `RULES.md`, `CHECKPOINTS.md`, `RUBRIC.md`, `SUBMISSION.md`).
   - Tài liệu Ultralytics YOLO documentation (`https://docs.ultralytics.com`).
